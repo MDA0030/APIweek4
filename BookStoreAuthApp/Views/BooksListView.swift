@@ -40,7 +40,16 @@ struct BooksListView: View {
                     }
                 }
             }
-            .navigationTitle("The Lore and Myth Page")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Text("The Lore and Myth Page")
+                        .font(.title2.bold())
+                        .foregroundStyle(.purple)
+                }
+            }
+            
+            
             .task { await bookViewModel.loadingBooks() }
             }
             
@@ -61,6 +70,7 @@ struct BooksListView: View {
                     if url == nil {placeholder} else { ProgressView() }
                 }
             }
+            .aspectRatio(2/3, contentMode: .fit)
             .clipShape(RoundedRectangle(cornerRadius: 6))
         }
         
@@ -103,7 +113,7 @@ struct BooksListView: View {
     
     private func detailedRow(_ label: String, _ value: String) -> some View {
         HStack(alignment: .top) {
-            Text(label).bold().frame(width:110, alignment: .leading)
+            Text(label).bold().frame(minWidth: 90, alignment: .leading)
             Text(value).foregroundStyle(.secondary)
             
         }
@@ -117,7 +127,7 @@ struct BooksListView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 10) {
                 BookCoverView(url: book.urlOfImg)
-                    .frame(height: 240)
+                    .frame(maxWidth: 220)
                     .frame(maxWidth: .infinity)
                 Text(book.showTitle).font(.title.bold())
                 Text("by \(book.authorText)").font(.title2).foregroundStyle(.secondary)

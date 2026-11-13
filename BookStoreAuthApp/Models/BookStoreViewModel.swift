@@ -25,8 +25,8 @@ final class BookStoreViewModel: ObservableObject {
         
         var fldComponents = URLComponents(string: "https://openlibrary.org/search.json")
         fldComponents?.queryItems = [
-            URLQueryItem(name: "q", value: query),
-            URLQueryItem(name: "limit", value: "20"),
+            URLQueryItem(name: "q", value: "\(query) language:eng"),
+            URLQueryItem(name: "limit", value: "40"),
             URLQueryItem(name: "fields", value: "key,title,author_name,first_publish_year,cover_i,subject,first_sentence,number_of_pages_median")
             ]
         guard let url = fldComponents?.url else {
