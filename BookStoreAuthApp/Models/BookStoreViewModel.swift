@@ -16,6 +16,7 @@ enum LoadingProgress {
 
 @MainActor
 
+// stores list of books and updates if properties change
 final class BookStoreViewModel: ObservableObject {
     
     @Published var books: [BookQualities] = []
