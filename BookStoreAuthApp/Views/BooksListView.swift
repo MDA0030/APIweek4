@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+//main screen
 struct BooksListView: View {
     @StateObject private var bookViewModel = BookStoreViewModel()
     
@@ -14,6 +15,7 @@ struct BooksListView: View {
     var body: some View {
         NavigationStack {
             Group {
+                //case switch for loading
                 switch bookViewModel.currentState {
                 case .idle, .loading:
                     ProgressView("Loading book...")
@@ -40,6 +42,7 @@ struct BooksListView: View {
                     }
                 }
             }
+            //design change for purple lettering style
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .principal) {
@@ -56,6 +59,7 @@ struct BooksListView: View {
         }
     }
     
+    //gets book cover from URL
     struct BookCoverView: View {
         let url: URL?
         
@@ -83,6 +87,7 @@ struct BooksListView: View {
         
     }
     
+    //makes book row used in the view
     struct BookRowView: View {
         let book: BookQualities
         
@@ -111,6 +116,7 @@ struct BooksListView: View {
         }
     }
     
+    //function for creating line of detail
     private func detailedRow(_ label: String, _ value: String) -> some View {
         HStack(alignment: .top) {
             Text(label).bold().frame(minWidth: 90, alignment: .leading)
@@ -119,6 +125,7 @@ struct BooksListView: View {
         }
     }
     
+    //makes view of selected book after clicking on book
     struct BookDetailView: View {
         let book: BookQualities
         @StateObject private var detailModel = BooksDetailViewModel()

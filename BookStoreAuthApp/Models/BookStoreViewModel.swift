@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 
+// handles whether list is idle,loading,loaded,empty,failed
 enum LoadingProgress {
     case idle, loading, loaded, empty
     case failed(String)
@@ -20,6 +21,7 @@ final class BookStoreViewModel: ObservableObject {
     @Published var books: [BookQualities] = []
     @Published var currentState: LoadingProgress = .idle
     
+    //gets list from API then builds and handles URL
     func loadingBooks(query: String = "subject:fantasy") async {
         currentState = .loading
         
@@ -37,7 +39,7 @@ final class BookStoreViewModel: ObservableObject {
         do {
             var idRequest = URLRequest(url: url)
             
-            idRequest.setValue("LoreandMythPage/1.0", forHTTPHeaderField: "User=Agent")
+            idRequest.setValue("LoreandMythPage/1.0", forHTTPHeaderField: "User-Agent")
             
             let (data, response) = try await URLSession.shared.data(for: idRequest)
             
@@ -61,10 +63,12 @@ final class BookStoreViewModel: ObservableObject {
 
 @MainActor
 
+// view model with long description
 final class BooksDetailViewModel : ObservableObject {
     @Published var isLoading = false
     @Published var bookDescription: String?
     
+    //gets longer description for a book
     func loadBook(for book: BookQualities) async {
         guard let url = book.moreDeatiledURL else {return}
         isLoading = true

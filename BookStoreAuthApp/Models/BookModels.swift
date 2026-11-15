@@ -7,6 +7,7 @@
 
 import Foundation
 
+//keeps JSON data from API
 struct ResponseFromSearch: Decodable {
     let books: [BookQualities]?
     
@@ -15,6 +16,7 @@ struct ResponseFromSearch: Decodable {
     }
 }
 
+//variables for values from a book
 struct BookQualities: Decodable, Identifiable {
     let id: String
     let title: String?
@@ -25,6 +27,7 @@ struct BookQualities: Decodable, Identifiable {
     let firstSentence: [String]?
     let pageCount: Int?
     
+    //connects swift var to API JSON
     enum CodingKeys: String, CodingKey {
         case id = "key"
         case title
@@ -59,6 +62,7 @@ struct BookQualities: Decodable, Identifiable {
         return URL(string: "https://covers.openlibrary.org/b/id/\(coverNumber)-M.jpg?default=false")
     }
 
+    // up to 120 char of book's first sentence
     var shorterDescription: String {
         guard let sentence = firstSentence?.first, !sentence.isEmpty else {
             return "No description."
@@ -69,10 +73,11 @@ struct BookQualities: Decodable, Identifiable {
     var moreDeatiledURL: URL? { URL(string: "https://openlibrary.org\(id).json") }
 }
 
+//data as response from API of a book's description
 struct objDetail: Decodable {
     let bookDescription : String?
     
-    enum CodingKeys: String, CodingKey { case bookDescription }
+    enum CodingKeys: String, CodingKey { case bookDescription = "description" }
     private struct objDescription: Decodable { let value: String? }
     
     init(from decoder: Decoder) throws {
